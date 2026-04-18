@@ -1,0 +1,182 @@
+/* Admin Login Styles */
+
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--neon-dark);
+  position: relative;
+}
+
+.admin-login-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(229, 168, 53, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba(212, 148, 58, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.admin-login-card {
+  background: var(--neon-gray);
+  border: 1px solid var(--neon-border);
+  border-radius: 20px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  z-index: 1;
+}
+
+.admin-login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-login-header .icon-neon {
+  width: 48px;
+  height: 48px;
+  color: var(--neon-green);
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.admin-login-header h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-white);
+}
+
+.admin-login-header p {
+  color: var(--text-gray);
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-dark-gray);
+  pointer-events: none;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 2.75rem;
+  background: var(--neon-dark);
+  border: 1px solid var(--neon-border);
+  border-radius: 8px;
+  color: var(--text-white);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.input-with-icon input:focus {
+  outline: none;
+  border-color: var(--neon-green);
+}
+
+.input-with-icon input::placeholder {
+  color: var(--text-dark-gray);
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle-btn:hover {
+  color: var(--neon-green);
+}
+
+.admin-login-error {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #ff4444;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-login-submit {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.admin-login-back {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.back-link:hover {
+  color: var(--neon-green);
+}
+
+@media (max-width: 480px) {
+  .admin-login-card {
+    padding: 2rem 1.5rem;
+  }
+}
