@@ -130,7 +130,7 @@ function AgeGate({ onConfirm }: { onConfirm: () => void }) {
         <h2>Acceso Restringido</h2>
         <p>Este sitio es solo para adultos de 18 años o más. Debes tener la edad legal para continuar.</p>
         <div className="age-gate-buttons">
-          <button onClick={handleConfirm} className="age-gate-confirm">Soy mayor de 18</button>
+          <button onClick={handleConfirm} className="age-gate-confirm">Soy mayor de 21</button>
           <button onClick={() => window.location.href = 'https://google.com'} className="age-gate-exit">Salir</button>
         </div>
         <p className="age-gate-disclaimer">Sitio con fines informativos únicamente.</p>
