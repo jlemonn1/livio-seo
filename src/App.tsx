@@ -22,10 +22,18 @@ const IMAGES = {
 };
 
 const faqs = [
-  { question: 'Necesito ser socio para entrar?', answer: 'Si, todos los clubes cannábicos en España son asociaciones privadas. Necesitas ser socio y tener una invitación válida para acceder.' },
-  { question: 'Cuál es la edad mínima?', answer: 'La edad mínima para acceder es de 18 años. Debes traer tu documento de identidad válido.' },
-  { question: 'Puedo llevar cannabis fuera del club?', answer: 'No. El consumo está permitido exclusivamente dentro de las instalaciones del club. Portar cannabis en espacios públicos es ilegal.' },
-  { question: 'Cuánto cuesta la membresía?', answer: 'La cuota anual es de 20€. Incluye acceso al lounge, menú completo y eventos privados.' },
+  { question: '¿Qué es un club social de cannabis en Madrid?', answer: 'Un club social de cannabis en Madrid es una asociación privada sin ánimo de lucro, legalmente constituida y registrada, formada por adultos que comparten de forma colectiva el cultivo y el consumo de cannabis exclusivamente entre sus socios. Funciona bajo el principio de autoconsumo compartido reconocido por la jurisprudencia del Tribunal Supremo español. No es un comercio: es un espacio privado donde los socios gestionan sus propios costes y consumo de manera responsable y segura.' },
+  { question: '¿Es legal pertenecer a un club social de cannabis en Madrid?', answer: 'Los clubes sociales operan como asociaciones privadas amparadas en el derecho de asociación (Ley Orgánica 1/2002). La jurisprudencia del Tribunal Supremo (STS 484/2015 y sentencias posteriores) reconoce que el cultivo y consumo compartido entre un grupo cerrado de consumidores habituales no constituye delito de tráfico de drogas (art. 368 Código Penal), siempre que se cumplan estrictamente los requisitos: círculo cerrado, sin publicidad exterior, sin ánimo de lucro y consumo exclusivamente dentro del local. No existe una regulación específica estatal o autonómica en Madrid que modifique este marco, por lo que nuestro club opera con máxima prudencia y transparencia interna.' },
+  { question: '¿Quién puede unirse a un club social de cannabis en Madrid?', answer: 'Puede unirse cualquier persona mayor de 21 años y residente en España, no visitantes ocasionales, que presente documento oficial de identidad (DNI, NIE o pasaporte), sea avalada o invitada por un socio existente (para garantizar un entorno de consumidores responsables) y acepte los estatutos y reglamento interno del club. El club es una asociación cerrada y privada, no abierta al público general.' },
+  { question: '¿Cómo me hago miembro de un club social de cannabis en Madrid?', answer: 'El proceso es privado y sencillo:\n1. Solicita acceso por recomendación de un socio.\n2. Acude a una cita previa en el club (no se permite entrada sin cita).\n3. Presenta tu documento de identidad original y rellena el formulario de solicitud.\n4. Acepta los estatutos y normas internas.\n\nTodo se realiza respetando la protección de datos (RGPD).' },
+  { question: '¿En qué consiste la cuota de membresía?', answer: 'La cuota de membresía es una contribución para cubrir los costes reales del club, una aportación sin ánimo de lucro para sostener la asociación.' },
+  { question: '¿Qué ocurre dentro de un club social de cannabis en Madrid?', answer: 'Dentro del club, solo pueden acceder los socios registrados. Es un espacio privado y seguro donde se puede consumir cannabis de forma responsable y compartida, socializar en un ambiente controlado, participar en actividades (charlas, talleres de reducción de daños, etc.) y obtener información sobre consumo responsable. Todo el consumo se realiza exclusivamente en el interior. Está prohibido sacar cannabis del local o consumirlo en la vía pública.' },
+  { question: '¿Se pueden traer invitados al club?', answer: 'No se permiten invitados que no sean socios. El acceso es exclusivo para miembros registrados, ya que se trata de un espacio privado de asociación (círculo cerrado).' },
+  { question: '¿En qué se diferencia un club social de cannabis en Madrid de un coffee shop en Ámsterdam?', answer: 'Son modelos muy diferentes:\n\n- Club social en Madrid: Asociación privada sin ánimo de lucro, solo para socios registrados, sin publicidad exterior, consumo compartido interno.\n- Coffee shop en Ámsterdam: Establecimiento comercial con licencia, abierto al público general (incluidos turistas), con venta directa.\n\nEn Madrid no existen coffee shops como en los Países Bajos. Aquí todo funciona bajo el modelo asociativo privado y cerrado.' },
+  { question: '¿Cuál es la política de consumo responsable y límites?', answer: 'Promovemos el consumo responsable. Se recomienda no exceder cantidades razonables para uso personal y se prohíbe el consumo excesivo o que afecte a otros. Está totalmente prohibido el consumo de otras sustancias ilegales, conducir bajo efectos o molestar a otros socios. Ofrecemos información sobre reducción de riesgos y, si es necesario, orientación hacia recursos de apoyo.' },
+  { question: '¿Qué medidas de privacidad y protección de datos se aplican?', answer: 'Cumplimos rigurosamente el Reglamento General de Protección de Datos (RGPD). Tus datos personales se tratan de forma confidencial, solo para gestionar la membresía, y no se comparten con terceros. El club no publica listas de socios ni realiza publicidad exterior.' },
+  { question: '¿Qué ocurre si quiero darme de baja como socio?', answer: 'Puedes solicitar la baja en cualquier momento (por email o en el club). La baja es inmediata. Al darte de baja pierdes todos los derechos de acceso.' },
+  { question: '¿El club cumple la normativa municipal y de seguridad?', answer: 'Sí. Respetamos las distancias mínimas a centros educativos y sanitarios exigidas por la ordenanza municipal de Madrid. El local cumple las normas de habitabilidad, seguridad contra incendios y accesibilidad.' },
 ];
 
 const steps = [
@@ -598,7 +606,7 @@ function FAQ() {
                       transition={{ duration: 0.3 }}
                       className="faq-answer"
                     >
-                      <p>{faq.answer}</p>
+                      <pre>{faq.answer}</pre>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -666,7 +674,6 @@ function DatePicker({ value, onChange }: { value: string; onChange: (v: string) 
   const firstDay = new Date(year, month, 1).getDay();
   const startOffset = firstDay === 0 ? 6 : firstDay - 1;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const prevDays = new Date(year, month, 0).getDate();
 
   const handleSelect = (day: number) => {
     const sel = new Date(year, month, day);
@@ -676,17 +683,16 @@ function DatePicker({ value, onChange }: { value: string; onChange: (v: string) 
     onChange(`${y}-${m}-${d}`);
   };
 
-  const cells: { day: number; cur: boolean; dis: boolean }[] = [];
-  for (let i = startOffset - 1; i >= 0; i--) {
-    cells.push({ day: prevDays - i, cur: false, dis: true });
-  }
+  // Solo días del mes actual, sin rellenar huecos
+  const cells: { day: number; dis: boolean; isFirst: boolean; gridColumn?: number }[] = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const dt = new Date(year, month, d);
-    cells.push({ day: d, cur: true, dis: dt < today });
-  }
-  const rem = 42 - cells.length;
-  for (let i = 1; i <= rem; i++) {
-    cells.push({ day: i, cur: false, dis: true });
+    cells.push({ 
+      day: d, 
+      dis: dt < today,
+      isFirst: d === 1,
+      gridColumn: d === 1 ? startOffset + 1 : undefined
+    });
   }
 
   return (
@@ -701,16 +707,17 @@ function DatePicker({ value, onChange }: { value: string; onChange: (v: string) 
       </div>
       <div className="picker-calendar-grid">
         {cells.map((c, i) => {
-          const dateStr = c.cur ? `${year}-${String(month + 1).padStart(2, '0')}-${String(c.day).padStart(2, '0')}` : '';
+          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(c.day).padStart(2, '0')}`;
           const selected = value === dateStr;
-          const isToday = c.cur && c.day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+          const isToday = c.day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
           return (
             <button
               key={i}
               type="button"
               disabled={c.dis}
-              className={`picker-calendar-cell ${!c.cur ? 'other' : ''} ${selected ? 'selected' : ''} ${isToday && !selected ? 'today' : ''}`}
-              onClick={() => c.cur && handleSelect(c.day)}
+              className={`picker-calendar-cell ${selected ? 'selected' : ''} ${isToday && !selected ? 'today' : ''}`}
+              style={c.gridColumn ? { gridColumnStart: c.gridColumn } : undefined}
+              onClick={() => handleSelect(c.day)}
             >
               {c.day}
             </button>
