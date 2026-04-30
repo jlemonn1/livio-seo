@@ -2,7 +2,9 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { Leaf, Menu, X, ChevronDown, Clock, Phone, Mail, Users, Shield, Copy, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { crearReserva } from './services/api';
+import LanguageSelector from './components/LanguageSelector';
 import './App.css';
 
 const IMAGES = {
@@ -20,28 +22,6 @@ const IMAGES = {
     '/gal2.png',
   ]
 };
-
-const faqs = [
-  { question: '¿Qué es un club social de cannabis en Madrid?', answer: 'Un club social de cannabis en Madrid es una asociación privada sin ánimo de lucro, legalmente constituida y registrada, formada por adultos que comparten de forma colectiva el cultivo y el consumo de cannabis exclusivamente entre sus socios. Funciona bajo el principio de autoconsumo compartido reconocido por la jurisprudencia del Tribunal Supremo español. No es un comercio: es un espacio privado donde los socios gestionan sus propios costes y consumo de manera responsable y segura.' },
-  { question: '¿Es legal pertenecer a un club social de cannabis en Madrid?', answer: 'Los clubes sociales operan como asociaciones privadas amparadas en el derecho de asociación (Ley Orgánica 1/2002). La jurisprudencia del Tribunal Supremo (STS 484/2015 y sentencias posteriores) reconoce que el cultivo y consumo compartido entre un grupo cerrado de consumidores habituales no constituye delito de tráfico de drogas (art. 368 Código Penal), siempre que se cumplan estrictamente los requisitos: círculo cerrado, sin publicidad exterior, sin ánimo de lucro y consumo exclusivamente dentro del local. No existe una regulación específica estatal o autonómica en Madrid que modifique este marco, por lo que nuestro club opera con máxima prudencia y transparencia interna.' },
-  { question: '¿Quién puede unirse a un club social de cannabis en Madrid?', answer: 'Puede unirse cualquier persona mayor de 21 años y residente en España, no visitantes ocasionales, que presente documento oficial de identidad (DNI, NIE o pasaporte), sea avalada o invitada por un socio existente (para garantizar un entorno de consumidores responsables) y acepte los estatutos y reglamento interno del club. El club es una asociación cerrada y privada, no abierta al público general.' },
-  { question: '¿Cómo me hago miembro de un club social de cannabis en Madrid?', answer: 'El proceso es privado y sencillo:\n1. Solicita acceso por recomendación de un socio.\n2. Acude a una cita previa en el club (no se permite entrada sin cita).\n3. Presenta tu documento de identidad original y rellena el formulario de solicitud.\n4. Acepta los estatutos y normas internas.\n\nTodo se realiza respetando la protección de datos (RGPD).' },
-  { question: '¿En qué consiste la cuota de membresía?', answer: 'La cuota de membresía es una contribución para cubrir los costes reales del club, una aportación sin ánimo de lucro para sostener la asociación.' },
-  { question: '¿Qué ocurre dentro de un club social de cannabis en Madrid?', answer: 'Dentro del club, solo pueden acceder los socios registrados. Es un espacio privado y seguro donde se puede consumir cannabis de forma responsable y compartida, socializar en un ambiente controlado, participar en actividades (charlas, talleres de reducción de daños, etc.) y obtener información sobre consumo responsable. Todo el consumo se realiza exclusivamente en el interior. Está prohibido sacar cannabis del local o consumirlo en la vía pública.' },
-  { question: '¿Se pueden traer invitados al club?', answer: 'No se permiten invitados que no sean socios. El acceso es exclusivo para miembros registrados, ya que se trata de un espacio privado de asociación (círculo cerrado).' },
-  { question: '¿En qué se diferencia un club social de cannabis en Madrid de un coffee shop en Ámsterdam?', answer: 'Son modelos muy diferentes:\n\n- Club social en Madrid: Asociación privada sin ánimo de lucro, solo para socios registrados, sin publicidad exterior, consumo compartido interno.\n- Coffee shop en Ámsterdam: Establecimiento comercial con licencia, abierto al público general (incluidos turistas), con venta directa.\n\nEn Madrid no existen coffee shops como en los Países Bajos. Aquí todo funciona bajo el modelo asociativo privado y cerrado.' },
-  { question: '¿Cuál es la política de consumo responsable y límites?', answer: 'Promovemos el consumo responsable. Se recomienda no exceder cantidades razonables para uso personal y se prohíbe el consumo excesivo o que afecte a otros. Está totalmente prohibido el consumo de otras sustancias ilegales, conducir bajo efectos o molestar a otros socios. Ofrecemos información sobre reducción de riesgos y, si es necesario, orientación hacia recursos de apoyo.' },
-  { question: '¿Qué medidas de privacidad y protección de datos se aplican?', answer: 'Cumplimos rigurosamente el Reglamento General de Protección de Datos (RGPD). Tus datos personales se tratan de forma confidencial, solo para gestionar la membresía, y no se comparten con terceros. El club no publica listas de socios ni realiza publicidad exterior.' },
-  { question: '¿Qué ocurre si quiero darme de baja como socio?', answer: 'Puedes solicitar la baja en cualquier momento (por email o en el club). La baja es inmediata. Al darte de baja pierdes todos los derechos de acceso.' },
-  { question: '¿El club cumple la normativa municipal y de seguridad?', answer: 'Sí. Respetamos las distancias mínimas a centros educativos y sanitarios exigidas por la ordenanza municipal de Madrid. El local cumple las normas de habitabilidad, seguridad contra incendios y accesibilidad.' },
-];
-
-const steps = [
-  { title: 'Elige', desc: 'Escoge tu fecha y hora' },
-  { title: 'Registra', desc: 'Completa tus datos' },
-  { title: 'Visita', desc: 'Ven al club con tu invitación' },
-  { title: 'Disfruta', desc: 'Accede al lounge y menú' },
-];
 
 // Componente con animation trigger cuando entra en viewport
 function AnimatedSection({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
@@ -103,6 +83,7 @@ function FloatingLeaf({ className, delay = 0 }: { className?: string, delay?: nu
 }
 
 function AgeGate({ onConfirm }: { onConfirm: () => void }) {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -135,19 +116,20 @@ function AgeGate({ onConfirm }: { onConfirm: () => void }) {
         transition={{ duration: 0.4 }}
       >
         <Shield className="icon-neon" />
-        <h2>Acceso Restringido</h2>
-        <p>Este sitio es solo para adultos de 18 años o más. Debes tener la edad legal para continuar.</p>
+        <h2>{t('ageGate.title')}</h2>
+        <p>{t('ageGate.description')}</p>
         <div className="age-gate-buttons">
-          <button onClick={handleConfirm} className="age-gate-confirm">Soy mayor de 21</button>
-          <button onClick={() => window.location.href = 'https://google.com'} className="age-gate-exit">Salir</button>
+          <button onClick={handleConfirm} className="age-gate-confirm">{t('ageGate.confirm')}</button>
+          <button onClick={() => window.location.href = 'https://google.com'} className="age-gate-exit">{t('ageGate.exit')}</button>
         </div>
-        <p className="age-gate-disclaimer">Sitio con fines informativos únicamente.</p>
+        <p className="age-gate-disclaimer">{t('ageGate.disclaimer')}</p>
       </motion.div>
     </motion.div>
   );
 }
 
 function Navbar({ onReserve }: { onReserve: () => void }) {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -169,12 +151,13 @@ function Navbar({ onReserve }: { onReserve: () => void }) {
           <img src={IMAGES.logo} alt="Logo" />
         </div>
         <div className="navbar-links">
-          <a href="#about">Nosotros</a>
-          <a href="#steps">Cómo Unirse</a>
-          <a href="#gallery">Galería</a>
-          <a href="#location">Horario</a>
-          <a href="#faq">FAQ</a>
-          <button onClick={onReserve} className="btn-primary">Invitación</button>
+          <a href="#about">{t('navbar.about')}</a>
+          <a href="#steps">{t('navbar.howToJoin')}</a>
+          <a href="#gallery">{t('navbar.gallery')}</a>
+          <a href="#location">{t('navbar.schedule')}</a>
+          <a href="#faq">{t('navbar.faq')}</a>
+          <button onClick={onReserve} className="btn-primary">{t('navbar.invitation')}</button>
+          <LanguageSelector />
         </div>
         <button className="navbar-mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)}>
           {mobileOpen ? <X /> : <Menu />}
@@ -182,12 +165,13 @@ function Navbar({ onReserve }: { onReserve: () => void }) {
       </div>
       {mobileOpen && (
         <div className="navbar-mobile-menu open">
-          <a href="#about">Nosotros</a>
-          <a href="#steps">Cómo Unirse</a>
-          <a href="#gallery">Galería</a>
-          <a href="#location">Horario</a>
-          <a href="#faq">FAQ</a>
-          <button onClick={() => { onReserve(); setMobileOpen(false); }} className="btn-primary">Invitación</button>
+          <a href="#about">{t('navbar.about')}</a>
+          <a href="#steps">{t('navbar.howToJoin')}</a>
+          <a href="#gallery">{t('navbar.gallery')}</a>
+          <a href="#location">{t('navbar.schedule')}</a>
+          <a href="#faq">{t('navbar.faq')}</a>
+          <button onClick={() => { onReserve(); setMobileOpen(false); }} className="btn-primary">{t('navbar.invitation')}</button>
+          <LanguageSelector />
         </div>
       )}
     </motion.nav>
@@ -195,6 +179,7 @@ function Navbar({ onReserve }: { onReserve: () => void }) {
 }
 
 function Hero({ onReserve }: { onReserve: () => void }) {
+  const { t } = useTranslation();
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -202,8 +187,8 @@ function Hero({ onReserve }: { onReserve: () => void }) {
   const [pressProgress, setPressProgress] = useState(0);
   const pressTimerRef = useRef<NodeJS.Timeout | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const LONG_PRESS_DURATION = 3000; // 3 segundos
-  const PROGRESS_INTERVAL = 50; // Actualizar cada 50ms
+  const LONG_PRESS_DURATION = 3000;
+  const PROGRESS_INTERVAL = 50;
 
   const clearPressTimers = useCallback(() => {
     if (pressTimerRef.current) {
@@ -249,7 +234,6 @@ function Hero({ onReserve }: { onReserve: () => void }) {
       </motion.div>
       <motion.div className="hero-overlay" style={{ opacity }} />
       
-      {/* Floating leaves */}
       <FloatingLeaf className="leaf-1" delay={0} />
       <FloatingLeaf className="leaf-2" delay={2} />
       <FloatingLeaf className="leaf-3" delay={4} />
@@ -270,7 +254,7 @@ function Hero({ onReserve }: { onReserve: () => void }) {
             style={{ position: 'relative', cursor: 'pointer' }}
           >
             <Leaf size={16} />
-            <span>Bernabeu, Madrid 📌</span>
+            <span>{t('hero.badge')}</span>
             {pressProgress > 0 && (
               <div className="long-press-indicator">
                 <svg viewBox="0 0 36 36" className="circular-chart">
@@ -304,8 +288,7 @@ function Hero({ onReserve }: { onReserve: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Tu espacio privado para disfrutar de cannabis de forma legal y responsable. 
-          Únete a la comunidad más exclusiva de Madrid.
+          {t('hero.subtitle')}
         </motion.p>
         
         <motion.div 
@@ -314,9 +297,9 @@ function Hero({ onReserve }: { onReserve: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <button onClick={onReserve} className="btn-primary">Consigue tu Invitación</button>
+          <button onClick={onReserve} className="btn-primary">{t('hero.ctaPrimary')}</button>
           <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="btn-outline">
-            Descubre más <ArrowRight size={18} />
+            {t('hero.ctaSecondary')} <ArrowRight size={18} />
           </button>
         </motion.div>
         
@@ -328,11 +311,11 @@ function Hero({ onReserve }: { onReserve: () => void }) {
         >
           <div className="hero-info-item">
             <span className="dot"></span>
-            <span>+21 Años</span>
+            <span>{t('hero.age')}</span>
           </div>
           <div className="hero-info-item">
             <span className="dot"></span>
-            <span>Abierto 13:00 - 22:00</span>
+            <span>{t('hero.hours')}</span>
           </div>
         </motion.div>
       </div>
@@ -348,6 +331,7 @@ function Hero({ onReserve }: { onReserve: () => void }) {
 }
 
 function About() {
+  const { t } = useTranslation();
   return (
     <section id="about" className="about">
       <FloatingLeaf className="leaf-about-1" delay={1} />
@@ -361,30 +345,23 @@ function About() {
           
           <AnimatedSection className="about-content" delay={0.4}>
             <h2 className="section-title">
-              Sobre <span className="highlight">District420</span>
+              {t('about.title')}
             </h2>
-            <p>
-              District420 es una asociación cannábica privada en el corazón de Madrid. 
-              Fundamos este espacio para crear una comunidad donde los amantes del cannabis 
-              puedan disfrutar de forma segura, legal y en buen ambiente.
-            </p>
-            <p>
-              Nuestro objetivo es ofrecer un lugar tranquilo y exclusivo donde puedas 
-              relajarte, conectar con otros y disfrutar de un buen ambiente.
-            </p>
+            <p>{t('about.paragraph1')}</p>
+            <p>{t('about.paragraph2')}</p>
             <div className="about-features">
               <AnimatedSection delay={0.5} className="about-feature">
                 <Shield className="icon-neon" />
                 <div>
-                  <h4>100% Legal</h4>
-                  <p>Operamos bajo normativa</p>
+                  <h4>{t('about.featureLegal')}</h4>
+                  <p>{t('about.featureLegalDesc')}</p>
                 </div>
               </AnimatedSection>
               <AnimatedSection delay={0.6} className="about-feature">
                 <Users className="icon-neon" />
                 <div>
-                  <h4>Comunidad</h4>
-                  <p>Ambiente acogedor</p>
+                  <h4>{t('about.featureCommunity')}</h4>
+                  <p>{t('about.featureCommunityDesc')}</p>
                 </div>
               </AnimatedSection>
             </div>
@@ -396,23 +373,31 @@ function About() {
 }
 
 function Steps() {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
+  const stepsList = [
+    { title: t('steps.step1'), desc: t('steps.step1Desc') },
+    { title: t('steps.step2'), desc: t('steps.step2Desc') },
+    { title: t('steps.step3'), desc: t('steps.step3Desc') },
+    { title: t('steps.step4'), desc: t('steps.step4Desc') },
+  ];
 
   return (
     <section id="steps" className="steps" ref={containerRef}>
       <div className="container">
         <AnimatedSection className="steps-header" delay={0.2}>
           <h2 className="section-title">
-            Cómo <span className="highlight">Unirse</span>
+            {t('steps.title')}
           </h2>
           <p className="section-subtitle">
-            En solo 4 pasos puedes formar parte de District420
+            {t('steps.subtitle')}
           </p>
         </AnimatedSection>
         
         <div className="steps-container">
-          {steps.map((step, index) => (
+          {stepsList.map((step, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: 50 }}
@@ -440,12 +425,13 @@ function Steps() {
 
 
 function Location() {
+  const { t } = useTranslation();
   return (
     <section id="location" className="location">
       <div className="container">
         <AnimatedSection className="steps-header" delay={0.2}>
           <h2 className="section-title">
-            Horario y <span className="highlight">Contacto</span>
+            {t('location.title')}
           </h2>
         </AnimatedSection>
         
@@ -454,14 +440,14 @@ function Location() {
             <motion.div className="location-item" whileHover={{ x: 5 }}>
               <Clock className="icon-neon" />
               <div>
-                <h4>Horario</h4>
-                <p>Lunes a Domingo: 13:00 - 22:00</p>
+                <h4>{t('location.schedule')}</h4>
+                <p>{t('location.scheduleValue')}</p>
               </div>
             </motion.div>
             <motion.div className="location-item" whileHover={{ x: 5 }}>
               <Phone className="icon-neon" />
               <div>
-                <h4>WhatsApp</h4>
+                <h4>{t('location.whatsapp')}</h4>
                 <p>
                   <a href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer">
                     +34 600 000 000
@@ -472,7 +458,7 @@ function Location() {
             <motion.div className="location-item" whileHover={{ x: 5 }}>
               <Mail className="icon-neon" />
               <div>
-                <h4>Instagram</h4>
+                <h4>{t('location.instagram')}</h4>
                 <p>
                   <a href="https://instagram.com/thedistrictscs" target="_blank" rel="noopener noreferrer">
                     @thedistrictscs
@@ -490,6 +476,7 @@ function Location() {
 }
 
 function Gallery() {
+  const { t } = useTranslation();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -525,10 +512,10 @@ function Gallery() {
       <div className="container">
         <AnimatedSection className="steps-header" delay={0.2}>
           <h2 className="section-title">
-            Nuestra <span className="highlight">Galería</span>
+            {t('gallery.title')}
           </h2>
           <p className="section-subtitle">
-            Descubre el ambiente de District420
+            {t('gallery.subtitle')}
           </p>
         </AnimatedSection>
       </div>
@@ -559,22 +546,22 @@ function Gallery() {
         </div>
       </div>
       
-      <p className="gallery-hint">
-        Arrastra para explorar o usa el scroll
-      </p>
+      <p className="gallery-hint">{t('gallery.hint')}</p>
     </section>
   );
 }
 
 function FAQ() {
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const faqs = t('faq.items', { returnObjects: true }) as Array<{ question: string; answer: string }>;
 
   return (
     <section id="faq" className="faq">
       <div className="container">
         <AnimatedSection className="steps-header" delay={0.2}>
           <h2 className="section-title">
-            Preguntas <span className="highlight">Frecuentes</span>
+            {t('faq.title')}
           </h2>
         </AnimatedSection>
         
@@ -620,6 +607,7 @@ function FAQ() {
 }
 
 function Footer() {
+  const { t } = useTranslation();
   return (
     <motion.footer 
       className="footer"
@@ -633,22 +621,19 @@ function Footer() {
           <img src={IMAGES.logo} alt="Logo" />
         </div>
         <div className="footer-links">
-          <a href="#about">Nosotros</a>
-          <a href="#gallery">Galería</a>
-          <a href="#location">Contacto</a>
+          <a href="#about">{t('footer.about')}</a>
+          <a href="#gallery">{t('footer.gallery')}</a>
+          <a href="#location">{t('footer.contact')}</a>
         </div>
         <div className="footer-legal">
-          <p>AVISO: Este sitio es solo para adultos de 21 años o más.</p>
-          <p>Información con fines educativos. No promueve el consumo.</p>
-          <p>© 2026 District420. Todos los derechos reservados.</p>
+          <p>{t('footer.notice')}</p>
+          <p>{t('footer.info')}</p>
+          <p>{t('footer.rights')}</p>
         </div>
       </div>
     </motion.footer>
   );
 }
-
-const DAYS_ES = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'] as const;
-const MONTHS_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] as const;
 
 function generateTimeSlots(): string[] {
   const slots: string[] = [];
@@ -662,6 +647,7 @@ function generateTimeSlots(): string[] {
 const TIME_SLOTS = generateTimeSlots();
 
 function DatePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const { t } = useTranslation();
   const [viewDate, setViewDate] = useState(() => {
     const d = value ? new Date(value + 'T00:00:00') : new Date();
     return new Date(d.getFullYear(), d.getMonth(), 1);
@@ -683,7 +669,6 @@ function DatePicker({ value, onChange }: { value: string; onChange: (v: string) 
     onChange(`${y}-${m}-${d}`);
   };
 
-  // Solo días del mes actual, sin rellenar huecos
   const cells: { day: number; dis: boolean; isFirst: boolean; gridColumn?: number }[] = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const dt = new Date(year, month, d);
@@ -699,11 +684,11 @@ function DatePicker({ value, onChange }: { value: string; onChange: (v: string) 
     <div className="picker-calendar">
       <div className="picker-calendar-header">
         <button type="button" className="picker-nav-btn" onClick={() => setViewDate(new Date(year, month - 1, 1))}><ChevronLeft size={18} /></button>
-        <span className="picker-calendar-title">{MONTHS_ES[month]} {year}</span>
+        <span className="picker-calendar-title">{(t('months', { returnObjects: true }) as string[])[month]} {year}</span>
         <button type="button" className="picker-nav-btn" onClick={() => setViewDate(new Date(year, month + 1, 1))}><ChevronRight size={18} /></button>
       </div>
       <div className="picker-calendar-weekdays">
-        {DAYS_ES.map(d => <div key={d} className="picker-calendar-weekday">{d}</div>)}
+        {(t('days', { returnObjects: true }) as string[]).map(d => <div key={d} className="picker-calendar-weekday">{d}</div>)}
       </div>
       <div className="picker-calendar-grid">
         {cells.map((c, i) => {
@@ -729,6 +714,7 @@ function DatePicker({ value, onChange }: { value: string; onChange: (v: string) 
 }
 
 function TimePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const { t } = useTranslation();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -773,7 +759,7 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
         type="button"
         className={`picker-time-arrow picker-time-arrow-left ${canScrollLeft ? 'visible' : ''}`}
         onClick={() => scroll('left')}
-        aria-label="Anterior"
+        aria-label={t('timePicker.previous')}
       >
         <ChevronLeft size={20} />
       </button>
@@ -796,7 +782,7 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
         type="button"
         className={`picker-time-arrow picker-time-arrow-right ${canScrollRight ? 'visible' : ''}`}
         onClick={() => scroll('right')}
-        aria-label="Siguiente"
+        aria-label={t('timePicker.next')}
       >
         <ChevronRight size={20} />
       </button>
@@ -805,6 +791,7 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
 }
 
 function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const { t } = useTranslation();
   const [form, setForm] = useState({ nombre: '', email: '', telefono: '', fecha: '', hora: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -825,12 +812,12 @@ function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         const axiosErr = err as { response?: { data?: { message?: string; errors?: Record<string, string> } } };
         if (axiosErr.response?.data?.errors) {
           const firstError = Object.values(axiosErr.response.data.errors)[0];
-          setError(firstError || 'Error de validacion');
+          setError(firstError || t('reservation.validationError'));
         } else {
-          setError(axiosErr.response?.data?.message || 'Error al crear reserva');
+          setError(axiosErr.response?.data?.message || t('reservation.createError'));
         }
       } else {
-        setError('Error al procesar la solicitud');
+        setError(t('reservation.processingError'));
       }
     } finally {
       setLoading(false);
@@ -846,7 +833,8 @@ function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   const formatDisplayDate = (dateStr: string) => {
     if (!dateStr) return '';
     const d = new Date(dateStr + 'T00:00:00');
-    return `${d.getDate()} de ${MONTHS_ES[d.getMonth()]}`;
+    const months = t('months', { returnObjects: true }) as string[];
+    return `${d.getDate()} de ${months[d.getMonth()]}`;
   };
 
   return (
@@ -864,52 +852,52 @@ function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-header">
-          <h3>Reserva tu Visita</h3>
+          <h3>{t('reservation.title')}</h3>
           <button className="modal-close" onClick={onClose}><X /></button>
         </div>
         <div className="modal-body">
           {success ? (
             <div className="form-success">
               <Leaf className="icon-neon" />
-              <h4>¡Reserva Creada!</h4>
-              <p>Tu invitación está lista. Guarda tu token:</p>
+              <h4>{t('reservation.success')}</h4>
+              <p>{t('reservation.successDesc')}</p>
               <div className="token-display">
                 <code>{token}</code>
                 <button className="token-copy" onClick={copyToken}><Copy /></button>
               </div>
-              <p style={{ fontSize: '0.85rem', color: '#666' }}>Lo necesitarás para acceder al club.</p>
-              <button onClick={onClose} className="btn-primary form-submit">Cerrar</button>
+              <p style={{ fontSize: '0.85rem', color: '#666' }}>{t('reservation.successNote')}</p>
+              <button onClick={onClose} className="btn-primary form-submit">{t('reservation.close')}</button>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Nombre completo</label>
-                <input type="text" required value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} placeholder="Juan Pérez" />
+                <label>{t('reservation.fullName')}</label>
+                <input type="text" required value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} placeholder={t('reservation.fullNamePlaceholder')} />
               </div>
               <div className="form-group">
-                <label>Email</label>
-                <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="juan@email.com" />
+                <label>{t('reservation.email')}</label>
+                <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder={t('reservation.emailPlaceholder')} />
               </div>
               <div className="form-group">
-                <label>Teléfono</label>
-                <input type="tel" required value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} placeholder="+34 600 000 000" />
+                <label>{t('reservation.phone')}</label>
+                <input type="tel" required value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} placeholder={t('reservation.phonePlaceholder')} />
               </div>
               <div className="form-group">
-                <label>Fecha</label>
+                <label>{t('reservation.date')}</label>
                 <DatePicker value={form.fecha} onChange={(v) => setForm({ ...form, fecha: v })} />
                 {form.fecha && <span className="picker-selected-value">{formatDisplayDate(form.fecha)}</span>}
-                {!form.fecha && <span className="picker-hint">Selecciona una fecha</span>}
+                {!form.fecha && <span className="picker-hint">{t('reservation.selectDate')}</span>}
               </div>
               {form.fecha && (
                 <div className="form-group">
-                  <label>Hora</label>
+                  <label>{t('reservation.time')}</label>
                   <TimePicker value={form.hora} onChange={(v) => setForm({ ...form, hora: v })} />
                   {form.hora && <span className="picker-selected-value">{form.hora}</span>}
                 </div>
               )}
               {error && <p style={{ color: '#ff4444', marginBottom: '1rem' }}>{error}</p>}
               <button type="submit" className="btn-primary form-submit" disabled={loading || !form.fecha || !form.hora}>
-                {loading ? 'Enviando...' : 'Crear Reserva'}
+                {loading ? t('reservation.submitting') : t('reservation.submit')}
               </button>
             </form>
           )}

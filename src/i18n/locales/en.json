@@ -1,0 +1,159 @@
+{
+  "ageGate": {
+    "title": "Restricted Access",
+    "description": "This site is only for adults 18 years or older. You must be of legal age to continue.",
+    "confirm": "I am over 21",
+    "exit": "Exit",
+    "disclaimer": "Site for informational purposes only."
+  },
+  "navbar": {
+    "about": "About Us",
+    "howToJoin": "How to Join?",
+    "gallery": "Gallery",
+    "schedule": "Schedule",
+    "faq": "FAQ",
+    "invitation": "Invitation"
+  },
+  "hero": {
+    "badge": "Bernabeu, Madrid 📌",
+    "subtitle": "Your private space to enjoy cannabis legally and responsibly. Join Madrid's most exclusive community.",
+    "ctaPrimary": "Get Your Invitation",
+    "ctaSecondary": "Learn More",
+    "age": "21+ Years Old",
+    "hours": "Open 13:00 - 22:00"
+  },
+  "about": {
+    "title": "About District420",
+    "paragraph1": "District420 is a private cannabis association in the heart of Madrid. We founded this space to build a community where cannabis lovers can enjoy safely, legally, and in a good atmosphere.",
+    "paragraph2": "Our goal is to offer a calm and exclusive place where you can relax, connect with others, and enjoy a welcoming environment.",
+    "featureLegal": "100% Legal",
+    "featureLegalDesc": "Operating under regulations",
+    "featureCommunity": "Community",
+    "featureCommunityDesc": "Welcoming atmosphere"
+  },
+  "steps": {
+    "title": "How to Join",
+    "subtitle": "In just 4 steps you can become part of District420",
+    "step1": "Choose",
+    "step1Desc": "Pick your date and time",
+    "step2": "Register",
+    "step2Desc": "Fill in your details",
+    "step3": "Visit",
+    "step3Desc": "Come to the club with your invitation",
+    "step4": "Enjoy",
+    "step4Desc": "Access the lounge and menu"
+  },
+  "location": {
+    "title": "Schedule & Contact",
+    "schedule": "Schedule",
+    "scheduleValue": "Monday to Sunday: 13:00 - 22:00",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram"
+  },
+  "gallery": {
+    "title": "Our Gallery",
+    "subtitle": "Discover the atmosphere of District420",
+    "hint": "Drag to explore or use scroll"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "What is a cannabis social club in Madrid?",
+        "answer": "A cannabis social club in Madrid is a non-profit private association, legally established and registered, made up of adults who collectively share the cultivation and consumption of cannabis exclusively among members. It operates under the principle of shared personal use recognized by the jurisprudence of the Spanish Supreme Court. It is not a business: it is a private space where members manage their own costs and consumption responsibly and safely."
+      },
+      {
+        "question": "Is it legal to belong to a cannabis social club in Madrid?",
+        "answer": "Social clubs operate as private associations protected by the right of association (Organic Law 1/2002). The jurisprudence of the Supreme Court (STS 484/2015 and subsequent rulings) recognizes that shared cultivation and consumption among a closed group of regular consumers does not constitute drug trafficking (Article 368 of the Criminal Code), provided strict requirements are met: closed circle, no external advertising, non-profit, and consumption exclusively inside the premises. There is no specific state or regional regulation in Madrid that modifies this framework, so our club operates with maximum caution and internal transparency."
+      },
+      {
+        "question": "Who can join a cannabis social club in Madrid?",
+        "answer": "Anyone over 21 years of age and resident in Spain, not occasional visitors, may join, provided they present an official identity document (ID, NIE, or passport), are endorsed or invited by an existing member (to ensure an environment of responsible consumers), and accept the club's statutes and internal regulations. The club is a closed and private association, not open to the general public."
+      },
+      {
+        "question": "How do I become a member of a cannabis social club in Madrid?",
+        "answer": "The process is private and straightforward:\n1. Request access by recommendation from a member.\n2. Attend a pre-arranged appointment at the club (entry without an appointment is not allowed).\n3. Present your original identity document and fill out the application form.\n4. Accept the statutes and internal regulations.\n\nEverything is carried out respecting data protection (GDPR)."
+      },
+      {
+        "question": "What does the membership fee cover?",
+        "answer": "The membership fee is a contribution to cover the real costs of the club, a non-profit contribution to sustain the association."
+      },
+      {
+        "question": "What happens inside a cannabis social club in Madrid?",
+        "answer": "Only registered members can access the club. It is a private and secure space where you can consume cannabis responsibly and collectively, socialize in a controlled environment, participate in activities (talks, harm reduction workshops, etc.), and obtain information on responsible consumption. All consumption takes place exclusively inside. It is forbidden to take cannabis out of the premises or consume it in public spaces."
+      },
+      {
+        "question": "Can I bring guests to the club?",
+        "answer": "Guests who are not members are not allowed. Access is exclusive to registered members, as it is a private association space (closed circle)."
+      },
+      {
+        "question": "How does a cannabis social club in Madrid differ from a coffee shop in Amsterdam?",
+        "answer": "They are very different models:\n\n- Social club in Madrid: Non-profit private association, only for registered members, no external advertising, internal shared consumption.\n- Coffee shop in Amsterdam: Licensed commercial establishment, open to the general public (including tourists), with direct sales.\n\nIn Madrid, there are no coffee shops like in the Netherlands. Here everything works under the private and closed associative model."
+      },
+      {
+        "question": "What is the responsible consumption policy and limits?",
+        "answer": "We promote responsible consumption. It is recommended not to exceed reasonable amounts for personal use and excessive consumption that affects others is prohibited. The consumption of other illegal substances, driving under the influence, or disturbing other members is strictly prohibited. We offer information on harm reduction and, if necessary, guidance towards support resources."
+      },
+      {
+        "question": "What privacy and data protection measures are applied?",
+        "answer": "We strictly comply with the General Data Protection Regulation (GDPR). Your personal data is treated confidentially, only to manage membership, and is not shared with third parties. The club does not publish member lists or carry out external advertising."
+      },
+      {
+        "question": "What happens if I want to resign as a member?",
+        "answer": "You can request resignation at any time (by email or at the club). Resignation is immediate. Upon resigning, you lose all access rights."
+      },
+      {
+        "question": "Does the club comply with municipal and safety regulations?",
+        "answer": "Yes. We respect the minimum distances to educational and health centers required by the municipal regulations of Madrid. The premises comply with habitability, fire safety, and accessibility standards."
+      }
+    ]
+  },
+  "footer": {
+    "about": "About Us",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "notice": "NOTICE: This site is only for adults 21 years or older.",
+    "info": "Information for educational purposes. Does not promote consumption.",
+    "rights": "© 2026 District420. All rights reserved."
+  },
+  "reservation": {
+    "title": "Book Your Visit",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Smith",
+    "email": "Email",
+    "emailPlaceholder": "john@email.com",
+    "phone": "Phone",
+    "phonePlaceholder": "+34 600 000 000",
+    "date": "Date",
+    "selectDate": "Select a date",
+    "time": "Time",
+    "success": "Reservation Created!",
+    "successDesc": "Your invitation is ready. Save your token:",
+    "successNote": "You will need it to access the club.",
+    "close": "Close",
+    "submitting": "Submitting...",
+    "submit": "Create Reservation",
+    "validationError": "Validation error",
+    "createError": "Error creating reservation",
+    "processingError": "Error processing the request"
+  },
+  "timePicker": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "months": [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ],
+  "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  "languageSelector": {
+    "label": "Language"
+  },
+  "languages": {
+    "es": "Español",
+    "en": "English",
+    "it": "Italiano",
+    "fr": "Français",
+    "de": "Deutsch"
+  }
+}

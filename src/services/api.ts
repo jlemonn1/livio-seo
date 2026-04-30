@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { ReservaRequest, ReservaCreated, ReservaDetalle, DashboardStats, Page, QRValidationResponse, LoginResponse } from '../types';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://landingweed.178.104.112.97.nip.io/api';
 
 const api = axios.create({
   baseURL: API_URL,

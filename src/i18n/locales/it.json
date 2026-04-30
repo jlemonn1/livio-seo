@@ -1,0 +1,159 @@
+{
+  "ageGate": {
+    "title": "Accesso Riservato",
+    "description": "Questo sito è riservato solo ad adulti di 18 anni o più. Devi essere maggiorenne per continuare.",
+    "confirm": "Sono maggiorenne (21+)",
+    "exit": "Esci",
+    "disclaimer": "Sito a scopo puramente informativo."
+  },
+  "navbar": {
+    "about": "Chi Siamo",
+    "howToJoin": "Come Unirsi?",
+    "gallery": "Galleria",
+    "schedule": "Orario",
+    "faq": "FAQ",
+    "invitation": "Invito"
+  },
+  "hero": {
+    "badge": "Bernabeu, Madrid 📌",
+    "subtitle": "Il tuo spazio privato per goderti la cannabis in modo legale e responsabile. Unisciti alla comunità più esclusiva di Madrid.",
+    "ctaPrimary": "Ottieni il Tuo Invito",
+    "ctaSecondary": "Scopri di Più",
+    "age": "21+ Anni",
+    "hours": "Aperto 13:00 - 22:00"
+  },
+  "about": {
+    "title": "Su District420",
+    "paragraph1": "District420 è un'associazione cannabica privata nel cuore di Madrid. Abbiamo fondato questo spazio per creare una comunità dove gli amanti della cannabis possano godersela in modo sicuro, legale e in buona compagnia.",
+    "paragraph2": "Il nostro obiettivo è offrire un luogo tranquillo ed esclusivo dove puoi rilassarti, connetterti con altri e goderti un'atmosfera accogliente.",
+    "featureLegal": "100% Legale",
+    "featureLegalDesc": "Operiamo sotto normativa",
+    "featureCommunity": "Comunità",
+    "featureCommunityDesc": "Atmosfera accogliente"
+  },
+  "steps": {
+    "title": "Come Unirsi",
+    "subtitle": "In soli 4 passi puoi entrare a far parte di District420",
+    "step1": "Scegli",
+    "step1Desc": "Scegli data e ora",
+    "step2": "Registrati",
+    "step2Desc": "Completa i tuoi dati",
+    "step3": "Visita",
+    "step3Desc": "Vieni al club con il tuo invito",
+    "step4": "Goditi",
+    "step4Desc": "Accedi al lounge e al menù"
+  },
+  "location": {
+    "title": "Orario e Contatto",
+    "schedule": "Orario",
+    "scheduleValue": "Da Lunedì a Domenica: 13:00 - 22:00",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram"
+  },
+  "gallery": {
+    "title": "La Nostra Galleria",
+    "subtitle": "Scopri l'atmosfera di District420",
+    "hint": "Trascina per esplorare o usa lo scroll"
+  },
+  "faq": {
+    "title": "Domande Frequenti",
+    "items": [
+      {
+        "question": "Cos'è un club sociale di cannabis a Madrid?",
+        "answer": "Un club sociale di cannabis a Madrid è un'associazione privata senza scopo di lucro, legalmente costituita e registrata, formata da adulti che condividono collettivamente la coltivazione e il consumo di cannabis esclusivamente tra i soci. Funziona secondo il principio dell'autoconsumo condiviso riconosciuto dalla giurisprudenza della Corte Suprema spagnola. Non è un negozio: è uno spazio privato dove i soci gestiscono i propri costi e consumi in modo responsabile e sicuro."
+      },
+      {
+        "question": "È legale appartenere a un club sociale di cannabis a Madrid?",
+        "answer": "I club sociali operano come associazioni private tutelate dal diritto di associazione (Legge Organica 1/2002). La giurisprudenza della Corte Suprema (STS 484/2015 e sentenze successive) riconosce che la coltivazione e il consumo condivisi tra un gruppo chiuso di consumatori abituali non costituisce reato di traffico di droga (art. 368 Codice Penale), purché siano soddisfatti rigorosamente i requisiti: circuito chiuso, nessuna pubblicità esterna, senza scopo di lucro e consumo esclusivamente all'interno del locale. Non esiste una normativa specifica statale o autonoma a Madrid che modifichi questo quadro, per cui il nostro club opera con la massima prudenza e trasparenza interna."
+      },
+      {
+        "question": "Chi può unirsi a un club sociale di cannabis a Madrid?",
+        "answer": "Può unirsi qualsiasi persona di età superiore ai 21 anni e residente in Spagna, non visitatori occasionali, che presenti un documento d'identità ufficiale (DNI, NIE o passaporto), sia raccomandata o invitata da un socio esistente (per garantire un ambiente di consumatori responsabili) e accetti lo statuto e il regolamento interno del club. Il club è un'associazione chiusa e privata, non aperta al pubblico generale."
+      },
+      {
+        "question": "Come posso diventare membro di un club sociale di cannabis a Madrid?",
+        "answer": "Il processo è privato e semplice:\n1. Richiedi l'accesso su raccomandazione di un socio.\n2. Vieni a un appuntamento prestabilito al club (non è consentito l'ingresso senza appuntamento).\n3. Presenta il tuo documento d'identità originale e compila il modulo di richiesta.\n4. Accetta lo statuto e il regolamento interno.\n\nTutto viene fatto nel rispetto della protezione dei dati (GDPR)."
+      },
+      {
+        "question": "In cosa consiste la quota di adesione?",
+        "answer": "La quota di adesione è un contributo per coprire i costi reali del club, un apporto senza scopo di lucro per sostenere l'associazione."
+      },
+      {
+        "question": "Cosa succede all'interno di un club sociale di cannabis a Madrid?",
+        "answer": "All'interno del club possono accedere solo i soci registrati. È uno spazio privato e sicuro dove è possibile consumare cannabis in modo responsabile e condiviso, socializzare in un ambiente controllato, partecipare ad attività (incontri, workshop sulla riduzione dei danni, ecc.) e ottenere informazioni sul consumo responsabile. Tutto il consumo avviene esclusivamente all'interno. È vietato portare cannabis fuori dal locale o consumarla in spazi pubblici."
+      },
+      {
+        "question": "Posso portare ospiti al club?",
+        "answer": "Non sono ammessi ospiti che non siano soci. L'accesso è esclusivo per i membri registrati, poiché si tratta di uno spazio associativo privato (circuito chiuso)."
+      },
+      {
+        "question": "In cosa differisce un club sociale di cannabis a Madrid da un coffee shop ad Amsterdam?",
+        "answer": "Sono modelli molto diversi:\n\n- Club sociale a Madrid: Associazione privata senza scopo di lucro, solo per soci registrati, senza pubblicità esterna, consumo condiviso interno.\n- Coffee shop ad Amsterdam: Locale commerciale con licenza, aperto al pubblico generale (inclusi i turisti), con vendita diretta.\n\nA Madrid non esistono coffee shop come nei Paesi Bassi. Qui tutto funziona secondo il modello associativo privato e chiuso."
+      },
+      {
+        "question": "Qual è la politica di consumo responsabile e i limiti?",
+        "answer": "Promuoviamo il consumo responsabile. Si consiglia di non superare quantità ragionevoli per uso personale e il consumo eccessivo che influisce sugli altri è vietato. È severamente vietato il consumo di altre sostanze illegali, guidare sotto effetto o disturbare altri soci. Offriamo informazioni sulla riduzione dei rischi e, se necessario, orientamento verso risorse di supporto."
+      },
+      {
+        "question": "Quali misure di privacy e protezione dei dati vengono applicate?",
+        "answer": "Rispettiamo rigorosamente il Regolamento Generale sulla Protezione dei Dati (GDPR). I tuoi dati personali sono trattati in modo confidenziale, solo per gestire l'iscrizione, e non sono condivisi con terze parti. Il club non pubblica elenchi di soci né fa pubblicità esterna."
+      },
+      {
+        "question": "Cosa succede se voglio rinunciare all'adesione?",
+        "answer": "Puoi richiedere la cessazione in qualsiasi momento (via email o al club). La cessazione è immediata. Con la cessazione perdi tutti i diritti di accesso."
+      },
+      {
+        "question": "Il club rispetta le normative municipali e di sicurezza?",
+        "answer": "Sì. Rispettiamo le distanze minime dai centri educativi e sanitari richieste dall'ordinanza municipale di Madrid. Il locale rispetta le norme di abitabilità, sicurezza antincendio e accessibilità."
+      }
+    ]
+  },
+  "footer": {
+    "about": "Chi Siamo",
+    "gallery": "Galleria",
+    "contact": "Contatto",
+    "notice": "AVVISO: Questo sito è riservato solo ad adulti di 21 anni o più.",
+    "info": "Informazione a scopo educativo. Non promuove il consumo.",
+    "rights": "© 2026 District420. Tutti i diritti riservati."
+  },
+  "reservation": {
+    "title": "Prenota la Tua Visita",
+    "fullName": "Nome completo",
+    "fullNamePlaceholder": "Mario Rossi",
+    "email": "Email",
+    "emailPlaceholder": "mario@email.com",
+    "phone": "Telefono",
+    "phonePlaceholder": "+34 600 000 000",
+    "date": "Data",
+    "selectDate": "Seleziona una data",
+    "time": "Ora",
+    "success": "Prenotazione Creata!",
+    "successDesc": "Il tuo invito è pronto. Salva il tuo token:",
+    "successNote": "Ti servirà per accedere al club.",
+    "close": "Chiudi",
+    "submitting": "Invio in corso...",
+    "submit": "Crea Prenotazione",
+    "validationError": "Errore di validazione",
+    "createError": "Errore nella creazione della prenotazione",
+    "processingError": "Errore nell'elaborazione della richiesta"
+  },
+  "timePicker": {
+    "previous": "Precedente",
+    "next": "Successivo"
+  },
+  "months": [
+    "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+    "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+  ],
+  "days": ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"],
+  "languageSelector": {
+    "label": "Lingua"
+  },
+  "languages": {
+    "es": "Español",
+    "en": "English",
+    "it": "Italiano",
+    "fr": "Français",
+    "de": "Deutsch"
+  }
+}
