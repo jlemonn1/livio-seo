@@ -449,8 +449,8 @@ function Location() {
               <div>
                 <h4>{t('location.whatsapp')}</h4>
                 <p>
-                  <a href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer">
-                    +34 600 000 000
+                  <a href="https://wa.me/31617041293" target="_blank" rel="noopener noreferrer">
+                    +31 6 17041293
                   </a>
                 </p>
               </div>
