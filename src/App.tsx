@@ -638,8 +638,9 @@ function Footer() {
 
 function generateTimeSlots(): string[] {
   const slots: string[] = [];
-  for (let h = 13; h < 23; h++) {
-    for (let m = 0; m < 60; m += 15) {
+  for (let h = 13; h <= 21; h++) {
+    const maxMinutes = h === 21 ? 30 : 45;
+    for (let m = 0; m <= maxMinutes; m += 15) {
       slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
     }
   }
