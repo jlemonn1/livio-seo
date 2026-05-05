@@ -675,13 +675,22 @@ function CrearReservaModal({
                 </div>
                 <div className="admin-form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '0.75rem' }}>Hora</label>
-                  <input
-                    type="time"
+                  <select
                     required
                     value={hora}
                     onChange={(e) => setHora(e.target.value)}
                     className="admin-input"
-                  />
+                  >
+                    <option value="">Seleccionar</option>
+                    {[
+                      '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
+                      '13:00', '13:30', '14:00', '14:30', '15:00', '15:30',
+                      '16:00', '16:30', '17:00', '17:30', '18:00', '18:30',
+                      '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'
+                    ].map((h) => (
+                      <option key={h} value={h}>{h}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="admin-form-row" style={{ marginTop: '0.5rem' }}>
