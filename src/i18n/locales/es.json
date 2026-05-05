@@ -31,6 +31,11 @@
     "featureCommunity": "Comunidad",
     "featureCommunityDesc": "Ambiente acogedor"
   },
+  "membership": {
+    "title": "Membresía Anual",
+    "period": "año",
+    "cashOnly": "Solo aceptamos efectivo"
+  },
   "steps": {
     "title": "Cómo Unirse",
     "subtitle": "En solo 4 pasos puedes formar parte de District420",

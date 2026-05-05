@@ -31,6 +31,11 @@
     "featureCommunity": "Community",
     "featureCommunityDesc": "Welcoming atmosphere"
   },
+  "membership": {
+    "title": "Annual Membership",
+    "period": "year",
+    "cashOnly": "Cash only"
+  },
   "steps": {
     "title": "How to Join",
     "subtitle": "In just 4 steps you can become part of District420",

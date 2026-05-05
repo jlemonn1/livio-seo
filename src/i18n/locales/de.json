@@ -31,6 +31,11 @@
     "featureCommunity": "Gemeinschaft",
     "featureCommunityDesc": "Einladende Atmosphäre"
   },
+  "membership": {
+    "title": "Jahresmitgliedschaft",
+    "period": "Jahr",
+    "cashOnly": "Nur Barzahlung"
+  },
   "steps": {
     "title": "So Machen Sie Mit",
     "subtitle": "In nur 4 Schritten können Sie Teil von District420 werden",

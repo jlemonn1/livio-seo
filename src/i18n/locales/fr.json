@@ -31,6 +31,11 @@
     "featureCommunity": "Communauté",
     "featureCommunityDesc": "Ambiance accueillante"
   },
+  "membership": {
+    "title": "Adhésion Annuelle",
+    "period": "an",
+    "cashOnly": "Espèces uniquement"
+  },
   "steps": {
     "title": "Comment Rejoindre",
     "subtitle": "En seulement 4 étapes, vous pouvez faire partie de District420",
