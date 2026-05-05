@@ -262,10 +262,9 @@ function EditReservaModal({
             />
           </div>
           <div className="admin-form-group">
-            <label>Código Socio Recomendado</label>
+            <label>Código Socio Recomendado (Opcional)</label>
             <input
               type="text"
-              required
               value={codigoSocioRecomendado}
               onChange={(e) => setCodigoSocioRecomendado(e.target.value)}
               className="admin-input"
@@ -655,10 +654,9 @@ function CrearReservaModal({
                 <User className="admin-input-icon" />
                 <input
                   type="text"
-                  required
                   value={codigoSocioRecomendado}
                   onChange={(e) => setCodigoSocioRecomendado(e.target.value)}
-                  placeholder="Código de Socio Recomendado"
+                  placeholder="Código de Socio Recomendado (Opcional)"
                   className="admin-input admin-input-with-left-icon"
                 />
               </div>

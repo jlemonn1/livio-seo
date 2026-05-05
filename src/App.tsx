@@ -903,7 +903,7 @@ function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
               </div>
               <div className="form-group">
                 <label>{t('reservation.referralCode')}</label>
-                <input type="text" required value={form.codigoSocioRecomendado} onChange={(e) => setForm({ ...form, codigoSocioRecomendado: e.target.value })} placeholder={t('reservation.referralCodePlaceholder')} />
+                <input type="text" value={form.codigoSocioRecomendado} onChange={(e) => setForm({ ...form, codigoSocioRecomendado: e.target.value })} placeholder={t('reservation.referralCodePlaceholder')} />
               </div>
               <div className="form-group">
                 <label>{t('reservation.date')}</label>
