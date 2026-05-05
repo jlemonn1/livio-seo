@@ -1,0 +1,105 @@
+/* ============================================
+   RESPONSIVE CONTAINER - Anti-desbordamiento máximo
+   ============================================ */
+
+/* 
+  Técnicas utilizadas:
+  1. max-width: 100% en todos los niveles
+  2. min-width: 0 para permitir encogimiento
+  3. overflow: hidden para contener
+  4. box-sizing: border-box para incluir padding
+  5. Contención de layout (contain)
+*/
+
+.responsive-container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  contain: layout style paint;
+}
+
+/* Wrapper adicional de seguridad */
+.responsive-container__wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Contenido real */
+.responsive-container__content {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Variante para tablas */
+.responsive-container.table-container {
+  background-color: var(--neon-gray);
+  border: 1px solid var(--neon-light);
+  border-radius: 0.75rem;
+}
+
+/* ============================================
+   ESTILOS GLOBALES DE CONTENCIÓN
+   Aplicados a elementos hijos
+   ============================================ */
+
+/* Forzar que todo hijo directo respete los límites */
+.responsive-container > * {
+  max-width: 100%;
+}
+
+/* Imágenes nunca desbordan */
+.responsive-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tablas con scroll horizontal si es necesario */
+.responsive-container table {
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Inputs y textareas */
+.responsive-container input,
+.responsive-container select,
+.responsive-container textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Prevenir texto largo */
+.responsive-container {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ============================================
+   MEDIA QUERIES - Ajustes específicos
+   ============================================ */
+
+@media (max-width: 767px) {
+  .responsive-container {
+    padding: 0;
+  }
+  
+  .responsive-container.table-container {
+    border-radius: 0.5rem;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .responsive-container {
+    font-size: 0.875rem;
+  }
+}

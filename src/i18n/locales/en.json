@@ -124,6 +124,8 @@
     "emailPlaceholder": "john@email.com",
     "phone": "Phone",
     "phonePlaceholder": "+34 600 000 000",
+    "referralCode": "Referral Member Code",
+    "referralCodePlaceholder": "Ex: MEMBER123",
     "date": "Date",
     "selectDate": "Select a date",
     "time": "Time",

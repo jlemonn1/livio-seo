@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'fra
 import { Leaf, Menu, X, ChevronDown, Clock, Phone, Mail, Users, Shield, Copy, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import QRCode from 'qrcode';
 import { crearReserva } from './services/api';
 import LanguageSelector from './components/LanguageSelector';
 import './App.css';
@@ -792,11 +793,21 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
 
 function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { t } = useTranslation();
-  const [form, setForm] = useState({ nombre: '', email: '', telefono: '', fecha: '', hora: '' });
+  const [form, setForm] = useState({ nombre: '', email: '', telefono: '', fecha: '', hora: '', codigoSocioRecomendado: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
+  const [qrUrl, setQrUrl] = useState('');
+
+  // Generar QR cuando se obtiene el token
+  useEffect(() => {
+    if (token) {
+      QRCode.toDataURL(token, { width: 200, margin: 2 })
+        .then(setQrUrl)
+        .catch(console.error);
+    }
+  }, [token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -861,9 +872,16 @@ function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
               <Leaf className="icon-neon" />
               <h4>{t('reservation.success')}</h4>
               <p>{t('reservation.successDesc')}</p>
-              <div className="token-display">
-                <code>{token}</code>
-                <button className="token-copy" onClick={copyToken}><Copy /></button>
+              <div className="qr-display">
+                {qrUrl && (
+                  <div className="qr-code-container">
+                    <img src={qrUrl} alt="QR Code de la reserva" className="qr-code-image" />
+                  </div>
+                )}
+                <div className="token-text">
+                  <code>{token}</code>
+                  <button className="token-copy" onClick={copyToken} title="Copiar token"><Copy /></button>
+                </div>
               </div>
               <p style={{ fontSize: '0.85rem', color: '#666' }}>{t('reservation.successNote')}</p>
               <button onClick={onClose} className="btn-primary form-submit">{t('reservation.close')}</button>
@@ -881,6 +899,10 @@ function ReservationModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
               <div className="form-group">
                 <label>{t('reservation.phone')}</label>
                 <input type="tel" required value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} placeholder={t('reservation.phonePlaceholder')} />
+              </div>
+              <div className="form-group">
+                <label>{t('reservation.referralCode')}</label>
+                <input type="text" required value={form.codigoSocioRecomendado} onChange={(e) => setForm({ ...form, codigoSocioRecomendado: e.target.value })} placeholder={t('reservation.referralCodePlaceholder')} />
               </div>
               <div className="form-group">
                 <label>{t('reservation.date')}</label>

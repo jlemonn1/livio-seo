@@ -124,6 +124,8 @@
     "emailPlaceholder": "max@email.com",
     "phone": "Telefon",
     "phonePlaceholder": "+34 600 000 000",
+    "referralCode": "Empfohlener Mitgliedercode",
+    "referralCodePlaceholder": "Z.B.: MITGLIED123",
     "date": "Datum",
     "selectDate": "Wählen Sie ein Datum",
     "time": "Uhrzeit",

@@ -982,23 +982,49 @@
   margin-bottom: 1rem;
 }
 
-.token-display {
+.qr-display {
   background: var(--neon-dark);
   border: 1px solid var(--neon-border);
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.qr-code-container {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-code-image {
+  width: 160px;
+  height: 160px;
+  display: block;
+}
+
+.token-text {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.75rem;
+  border-radius: 6px;
 }
 
-.token-display code {
+.token-text code {
   flex: 1;
   color: var(--neon-green);
   font-family: monospace;
   word-break: break-all;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .token-copy {
@@ -1006,6 +1032,12 @@
   border: none;
   color: var(--text-gray);
   padding: 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.token-copy:hover {
+  color: var(--neon-green);
 }
 
 /* Age Gate */

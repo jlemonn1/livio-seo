@@ -1,4 +1,4 @@
-import { Eye, Edit2, Trash2 } from 'lucide-react';
+import { Eye, Edit2, Trash2, CheckCircle } from 'lucide-react';
 import type { ReservaDetalle } from '../../types';
 import ReservaStatusBadge from './ReservaStatusBadge';
 
@@ -7,61 +7,102 @@ interface ReservaCardProps {
   onView: (reserva: ReservaDetalle) => void;
   onEdit: (reserva: ReservaDetalle) => void;
   onCancel: (id: number) => void;
+  onUsar?: (id: number) => void;
 }
 
-export default function ReservaCard({ reserva, onView, onEdit, onCancel }: ReservaCardProps) {
+export default function ReservaCard({ 
+  reserva, 
+  onView, 
+  onEdit, 
+  onCancel, 
+  onUsar 
+}: ReservaCardProps) {
+  
+  const isPendiente = !reserva.cancelada && !reserva.qrUsado;
+  const isUsado = reserva.qrUsado;
+  const isCancelada = reserva.cancelada;
+
   return (
-    <div className="admin-reserva-card">
-      <div className="admin-reserva-card-header">
-        <div className="admin-reserva-card-info">
-          <h4 className="admin-reserva-card-name">{reserva.nombre}</h4>
-          <p className="admin-reserva-card-email">{reserva.email}</p>
+    <div 
+      className={`
+        reserva-card 
+        ${isUsado ? 'reserva-card--used' : ''} 
+        ${isCancelada ? 'reserva-card--cancelled' : ''}
+      `}
+    >
+      {/* Header: Nombre + Estado */}
+      <div className="reserva-card__header">
+        <div className="reserva-card__identity">
+          <h4 className="reserva-card__name">
+            {reserva.nombre}
+          </h4>
+          <span className="reserva-card__email">
+            {reserva.email}
+          </span>
         </div>
-        <ReservaStatusBadge cancelada={reserva.cancelada} qrUsado={reserva.qrUsado} />
-      </div>
-      
-      <div className="admin-reserva-card-details">
-        <div className="admin-reserva-card-detail">
-          <span className="admin-reserva-card-label">Fecha</span>
-          <span className="admin-reserva-card-value">{reserva.fecha}</span>
-        </div>
-        <div className="admin-reserva-card-detail">
-          <span className="admin-reserva-card-label">Hora</span>
-          <span className="admin-reserva-card-value">{reserva.hora}</span>
-        </div>
-        <div className="admin-reserva-card-detail">
-          <span className="admin-reserva-card-label">Teléfono</span>
-          <span className="admin-reserva-card-value">{reserva.telefono}</span>
+        <div className="reserva-card__badge">
+          <ReservaStatusBadge cancelada={reserva.cancelada} qrUsado={reserva.qrUsado} />
         </div>
       </div>
       
-      <div className="admin-reserva-card-actions">
+      {/* Info compacta - Flex wrap */}
+      <div className="reserva-card__info">
+        <div className="reserva-card__info-row">
+          <span className="reserva-card__info-date">{reserva.fecha}</span>
+          <span className="reserva-card__info-time">{reserva.hora}</span>
+        </div>
+        <span className="reserva-card__info-phone">{reserva.telefono}</span>
+      </div>
+
+      {/* Código de socio */}
+      {reserva.codigoSocioRecomendado && (
+        <div className="reserva-card__ref">
+          Ref: {reserva.codigoSocioRecomendado}
+        </div>
+      )}
+      
+      {/* Acciones compactas */}
+      <div className="reserva-card__actions">
         <button
           onClick={() => onView(reserva)}
-          className="admin-reserva-card-btn"
-          title="Ver detalle"
+          className="reserva-card__btn reserva-card__btn--view"
+          title="Ver"
+          aria-label="Ver detalle"
         >
-          <Eye />
-          <span>Ver</span>
+          <Eye size={16} />
         </button>
-        {!reserva.cancelada && !reserva.qrUsado && (
+
+        {isPendiente && onUsar && (
           <button
-            onClick={() => onEdit(reserva)}
-            className="admin-reserva-card-btn"
-            title="Editar"
+            onClick={() => onUsar(reserva.id)}
+            className="reserva-card__btn reserva-card__btn--primary"
+            title="Usar"
+            aria-label="Marcar como usado"
           >
-            <Edit2 />
-            <span>Editar</span>
+            <CheckCircle size={16} />
+            <span>Usar</span>
           </button>
         )}
-        {!reserva.cancelada && (
+
+        {isPendiente && (
+          <button
+            onClick={() => onEdit(reserva)}
+            className="reserva-card__btn reserva-card__btn--secondary"
+            title="Editar"
+            aria-label="Editar"
+          >
+            <Edit2 size={16} />
+          </button>
+        )}
+
+        {!isCancelada && (
           <button
             onClick={() => onCancel(reserva.id)}
-            className="admin-reserva-card-btn admin-reserva-card-btn-danger"
+            className="reserva-card__btn reserva-card__btn--danger"
             title="Cancelar"
+            aria-label="Cancelar"
           >
-            <Trash2 />
-            <span>Cancelar</span>
+            <Trash2 size={16} />
           </button>
         )}
       </div>

@@ -1,5 +1,80 @@
 /* Admin Panel Styles - Custom CSS (No Tailwind) */
 
+/* ============================================
+   ESTILOS BASE ANTI-DESBORDAMIENTO
+   ============================================ */
+
+/* Reset box-sizing para todo el admin */
+.admin-layout,
+.admin-layout *,
+.admin-layout *::before,
+.admin-layout *::after {
+  box-sizing: border-box;
+}
+
+/* Prevenir desbordamiento horizontal en toda la página */
+.admin-layout {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Contenedor principal de contenido */
+.admin-main {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* Content area */
+.admin-content,
+.page-content {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  padding: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .admin-content,
+  .page-content {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .admin-content,
+  .page-content {
+    padding: 1.5rem;
+  }
+}
+
+/* ============================================
+   FIXES ANTI-DESBORDAMIENTO ESPECÍFICOS
+   ============================================ */
+
+/* Prevenir que elementos flex desborden */
+.admin-layout [style*="display: flex"],
+.admin-layout [class*="flex"] {
+  min-width: 0;
+}
+
+/* Prevenir que grids desborden */
+.admin-layout [style*="display: grid"],
+.admin-layout [class*="grid"] {
+  min-width: 0;
+}
+
+/* Forzar truncamiento en textos */
+.admin-layout h1,
+.admin-layout h2,
+.admin-layout h3,
+.admin-layout h4,
+.admin-layout p,
+.admin-layout span {
+  max-width: 100%;
+}
+
 /* ============== LAYOUT ============== */
 .admin-layout {
   min-height: 100vh;
@@ -273,11 +348,20 @@
 /* ============== PAGE HEADER ============== */
 .admin-page-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
   gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.admin-page-header > div:first-child {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .admin-page-title {
@@ -285,12 +369,20 @@
   font-weight: 700;
   color: var(--text-white);
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .admin-page-subtitle {
   color: var(--text-dark-gray);
   font-size: 0.875rem;
   margin: 0.25rem 0 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .admin-page-actions {
@@ -298,6 +390,7 @@
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 /* ============== BUTTONS ============== */
@@ -534,11 +627,19 @@
 }
 
 /* ============== TABLES ============== */
-.admin-table-container {
+/* 
+  NOTA: El contenedor principal de tabla ahora se maneja con 
+  ResponsiveContainer component. Ver: components/admin/ResponsiveContainer.css
+*/
+
+.admin-table-container-legacy {
   background-color: var(--neon-gray);
   border: 1px solid var(--neon-light);
   border-radius: 0.75rem;
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .admin-table-wrapper {
@@ -689,6 +790,10 @@
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 1rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -1377,6 +1482,10 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .admin-hidden-sm {
@@ -1424,6 +1533,203 @@
 .admin-timestamp {
   color: var(--text-dark-gray);
   font-size: 0.75rem;
+}
+
+/* ============== QR SCANNER FULLSCREEN MODAL ============== */
+.qr-scanner-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.qr-scanner-fullscreen-content {
+  background-color: var(--neon-gray);
+  border: 1px solid var(--neon-light);
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.qr-scanner-fullscreen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--neon-light);
+  background-color: var(--neon-gray);
+}
+
+.qr-scanner-fullscreen-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0;
+}
+
+.qr-scanner-fullscreen-close {
+  color: var(--text-gray);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.qr-scanner-fullscreen-close:hover {
+  color: var(--text-white);
+}
+
+.qr-scanner-fullscreen-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.qr-scanner-fullscreen-instructions {
+  text-align: center;
+  color: var(--text-gray);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.qr-scanner-fullscreen-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 400px;
+  background-color: #000;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.qr-scanner-fullscreen-area {
+  width: 100%;
+  height: 100%;
+}
+
+.qr-scanner-fullscreen-area video,
+.qr-scanner-fullscreen-area canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.qr-scanner-fullscreen-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--text-gray);
+}
+
+.qr-scanner-fullscreen-placeholder p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.qr-scanner-fullscreen-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #f87171;
+  background-color: rgba(239, 68, 68, 0.1);
+  padding: 2rem;
+  text-align: center;
+}
+
+.qr-scanner-fullscreen-error p {
+  margin: 0;
+}
+
+.qr-scanner-fullscreen-retry {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--neon-light);
+  color: var(--text-white);
+  border: 1px solid var(--neon-border);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qr-scanner-fullscreen-retry:hover {
+  background-color: var(--neon-border);
+}
+
+.qr-scanner-fullscreen-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.qr-scanner-fullscreen-result.success {
+  color: #34d399;
+  background-color: rgba(52, 211, 153, 0.1);
+}
+
+.qr-scanner-fullscreen-result.error {
+  color: #f87171;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.qr-scanner-fullscreen-result p {
+  margin: 0;
+}
+
+.qr-scanner-fullscreen-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.qr-scanner-fullscreen-close-button {
+  padding: 0.75rem 2rem;
+  background-color: var(--neon-light);
+  color: var(--text-white);
+  border: 1px solid var(--neon-border);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qr-scanner-fullscreen-close-button:hover {
+  background-color: var(--neon-border);
 }
 
 /* Responsive text */
@@ -1483,18 +1789,37 @@
   padding: 0.75rem;
 }
 
+/* ============================================
+   RESERVA CARD V2 - Mejorado para móvil
+   ============================================ */
+
 /* Individual Reserva Card */
 .admin-reserva-card {
   background-color: var(--neon-dark);
   border: 1px solid var(--neon-light);
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: 0.875rem;
   transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .admin-reserva-card:hover {
   border-color: var(--neon-border);
-  box-shadow: 0 0 20px rgba(229, 168, 53, 0.05);
+  box-shadow: 0 0 20px rgba(229, 168, 53, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Estados visuales de la tarjeta */
+.admin-reserva-card-used {
+  border-left: 3px solid #34d399;
+  background: linear-gradient(to right, rgba(52, 211, 153, 0.03), transparent);
+}
+
+.admin-reserva-card-cancelled {
+  border-left: 3px solid #f87171;
+  opacity: 0.85;
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.03), transparent);
 }
 
 /* Card Header */
@@ -1502,112 +1827,212 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .admin-reserva-card-info {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 .admin-reserva-card-name {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--text-white);
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.125rem 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.3;
 }
 
 .admin-reserva-card-email {
   font-size: 0.75rem;
-  color: var(--text-gray);
+  color: var(--text-dark-gray);
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Card Details Grid */
-.admin-reserva-card-details {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-  padding: 0.5rem 0;
-  border-top: 1px solid var(--neon-light);
-  border-bottom: 1px solid var(--neon-light);
+/* Status badge wrapper */
+.admin-reserva-card-status {
+  flex-shrink: 0;
+  transform: scale(0.9);
+  transform-origin: top right;
 }
 
-@media (max-width: 380px) {
-  .admin-reserva-card-details {
-    grid-template-columns: repeat(2, 1fr);
+/* Info Meta - Una línea compacta */
+.admin-reserva-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--text-gray);
+}
+
+.admin-reserva-card-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.admin-reserva-card-meta-icon {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Ocultar teléfono en pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .admin-reserva-card-meta-phone {
+    display: none;
   }
 }
 
-.admin-reserva-card-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
+/* Código de socio */
+.admin-reserva-card-codigo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.625rem;
+  font-size: 0.75rem;
+  background-color: rgba(229, 168, 53, 0.08);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  width: fit-content;
 }
 
-.admin-reserva-card-label {
-  font-size: 0.65rem;
+.admin-reserva-card-codigo-label {
   color: var(--text-dark-gray);
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
+  font-size: 0.6875rem;
 }
 
-.admin-reserva-card-value {
-  font-size: 0.875rem;
-  color: var(--text-white);
-  font-weight: 500;
+.admin-reserva-card-codigo-value {
+  color: var(--neon-green);
+  font-weight: 600;
+  font-size: 0.75rem;
 }
 
-/* Card Actions */
+/* Card Actions V2 */
 .admin-reserva-card-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.375rem;
+  margin-top: 0.5rem;
+  padding-top: 0.625rem;
+  border-top: 1px solid rgba(42, 42, 42, 0.6);
 }
 
 .admin-reserva-card-btn {
-  flex: 1;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border: none;
-  background-color: var(--neon-light);
-  color: var(--text-gray);
   font-family: inherit;
+  min-height: 36px;
+  min-width: 36px;
 }
 
-.admin-reserva-card-btn:hover {
+/* Botón Ver (icono solo) */
+.admin-reserva-card-btn-view {
+  background-color: var(--neon-light);
+  color: var(--text-gray);
+  flex-shrink: 0;
+}
+
+.admin-reserva-card-btn-view:hover {
   background-color: var(--neon-border);
   color: var(--text-white);
 }
 
-.admin-reserva-card-btn svg {
-  width: 14px;
-  height: 14px;
+/* ACCIÓN RÁPIDA: Botón Usar (destacado) */
+.admin-reserva-card-btn-usar {
+  flex: 1;
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.9), rgba(52, 211, 153, 0.7));
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(52, 211, 153, 0.25);
 }
 
-.admin-reserva-card-btn-danger {
-  background-color: rgba(239, 68, 68, 0.1);
+.admin-reserva-card-btn-usar:hover {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 1), rgba(52, 211, 153, 0.8));
+  box-shadow: 0 3px 12px rgba(52, 211, 153, 0.4);
+  transform: translateY(-1px);
+}
+
+.admin-reserva-card-btn-usar:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(52, 211, 153, 0.3);
+}
+
+/* Botón Editar (icono solo) */
+.admin-reserva-card-btn-edit {
+  background-color: var(--neon-light);
+  color: var(--text-gray);
+  flex-shrink: 0;
+}
+
+.admin-reserva-card-btn-edit:hover {
+  background-color: rgba(229, 168, 53, 0.2);
+  color: var(--neon-green);
+}
+
+/* Botón Cancelar (icono solo) */
+.admin-reserva-card-btn-cancel {
+  background-color: rgba(239, 68, 68, 0.08);
   color: #f87171;
+  flex-shrink: 0;
 }
 
-.admin-reserva-card-btn-danger:hover {
+.admin-reserva-card-btn-cancel:hover {
   background-color: rgba(239, 68, 68, 0.2);
   color: #ef4444;
+}
+
+.admin-reserva-card-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Ajustes responsive para tarjetas */
+@media (max-width: 380px) {
+  .admin-reserva-card {
+    padding: 0.75rem;
+  }
+  
+  .admin-reserva-card-name {
+    font-size: 0.875rem;
+  }
+  
+  .admin-reserva-card-btn {
+    min-height: 40px;
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 320px) {
+  .admin-reserva-card {
+    padding: 0.625rem;
+  }
+  
+  .admin-reserva-card-meta {
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .admin-reserva-card-actions {
+    gap: 0.25rem;
+  }
 }
 
 /* Table Action Icons (using SVG background) */

@@ -4,6 +4,7 @@ export interface ReservaRequest {
   telefono: string;
   fecha: string;
   hora: string;
+  codigoSocioRecomendado: string;
 }
 
 export interface ReservaCreated {
@@ -24,6 +25,7 @@ export interface ReservaDetalle {
   cancelada: boolean;
   createdAt: string;
   usedAt: string | null;
+  codigoSocioRecomendado: string;
 }
 
 export interface DashboardStats {

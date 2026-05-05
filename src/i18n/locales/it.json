@@ -124,6 +124,8 @@
     "emailPlaceholder": "mario@email.com",
     "phone": "Telefono",
     "phonePlaceholder": "+34 600 000 000",
+    "referralCode": "Codice Socio Riferimento",
+    "referralCodePlaceholder": "Es: SOCIO123",
     "date": "Data",
     "selectDate": "Seleziona una data",
     "time": "Ora",

@@ -124,6 +124,8 @@
     "emailPlaceholder": "juan@email.com",
     "phone": "Teléfono",
     "phonePlaceholder": "+34 600 000 000",
+    "referralCode": "Código de Socio Recomendado",
+    "referralCodePlaceholder": "Ej: SOCIO123",
     "date": "Fecha",
     "selectDate": "Selecciona una fecha",
     "time": "Hora",

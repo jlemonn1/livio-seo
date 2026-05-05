@@ -1,7 +1,7 @@
 import type { ReservaDetalle } from '../types';
 
 export function exportReservasCSV(reservas: ReservaDetalle[], filename = 'reservas.csv') {
-  const headers = ['ID', 'Nombre', 'Email', 'Telefono', 'Fecha', 'Hora', 'Token', 'Estado', 'Cancelada', 'Creada', 'Verificada'];
+  const headers = ['ID', 'Nombre', 'Email', 'Telefono', 'Fecha', 'Hora', 'Token', 'Estado', 'Cancelada', 'Creada', 'Verificada', 'Codigo Socio'];
   const statusLabel = (r: ReservaDetalle) => {
     if (r.cancelada) return 'Cancelada';
     if (r.qrUsado) return 'Verificada';
@@ -27,6 +27,7 @@ export function exportReservasCSV(reservas: ReservaDetalle[], filename = 'reserv
     escape(r.cancelada ? 'Si' : 'No'),
     escape(r.createdAt ? new Date(r.createdAt).toLocaleString('es-ES') : ''),
     escape(r.usedAt ? new Date(r.usedAt).toLocaleString('es-ES') : ''),
+    escape(r.codigoSocioRecomendado),
   ].join(','));
 
   const csv = [headers.join(','), rows].join('\n');

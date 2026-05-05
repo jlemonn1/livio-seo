@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calendar, Search, QrCode, X,
   Copy, Check, Loader2, AlertCircle, CheckCircle, XCircle,
-  Download, Plus, User, Mail, Phone
+  Download, Plus, User, Mail, Phone, RotateCcw
 } from 'lucide-react';
 import QRCode from 'qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
 import { getReservas, editarReserva, cancelarReserva, validarQR, crearReserva } from '../../services/api';
 import type { ReservaDetalle } from '../../types';
 import ReservaStatusBadge from '../../components/admin/ReservaStatusBadge';
-import ReservasTable from '../../components/admin/ReservasTable';
+import ReservasList from '../../components/admin/ReservasList';
+import ResponsiveContainer from '../../components/admin/ResponsiveContainer';
 import ConfirmDialog from '../../components/admin/ConfirmDialog';
 import { toast } from '../../components/admin/Toast';
 import { exportReservasCSV } from '../../utils/export';
@@ -76,7 +79,7 @@ function ReservaDetalleModal({
             </div>
           )}
 
-          <div className="admin-modal-grid">
+            <div className="admin-modal-grid">
             <div className="admin-modal-field">
               <label>Nombre</label>
               <p className="admin-modal-field-value">{reserva.nombre}</p>
@@ -88,6 +91,10 @@ function ReservaDetalleModal({
             <div className="admin-modal-field">
               <label>Telefono</label>
               <p className="admin-modal-field-value">{reserva.telefono}</p>
+            </div>
+            <div className="admin-modal-field">
+              <label>Código Socio</label>
+              <p className="admin-modal-field-value">{reserva.codigoSocioRecomendado}</p>
             </div>
             <div className="admin-modal-field">
               <label>Estado</label>
@@ -172,6 +179,7 @@ function EditReservaModal({
   const [nombre, setNombre] = useState(reserva.nombre);
   const [email, setEmail] = useState(reserva.email);
   const [telefono, setTelefono] = useState(reserva.telefono);
+  const [codigoSocioRecomendado, setCodigoSocioRecomendado] = useState(reserva.codigoSocioRecomendado);
   const [fecha, setFecha] = useState(reserva.fecha);
   const [hora, setHora] = useState(reserva.hora);
   const [saving, setSaving] = useState(false);
@@ -182,7 +190,7 @@ function EditReservaModal({
     setSaving(true);
     setError('');
     try {
-      await editarReserva(reserva.id, { nombre, email, telefono, fecha, hora });
+      await editarReserva(reserva.id, { nombre, email, telefono, fecha, hora, codigoSocioRecomendado });
       toast('success', 'Reserva actualizada correctamente');
       onSaved();
     } catch (err: unknown) {
@@ -253,6 +261,16 @@ function EditReservaModal({
               className="admin-input"
             />
           </div>
+          <div className="admin-form-group">
+            <label>Código Socio Recomendado</label>
+            <input
+              type="text"
+              required
+              value={codigoSocioRecomendado}
+              onChange={(e) => setCodigoSocioRecomendado(e.target.value)}
+              className="admin-input"
+            />
+          </div>
           <div className="admin-form-row">
             <div className="admin-form-group">
               <label>Fecha</label>
@@ -307,90 +325,225 @@ function ValidarQRModal({
   onClose: () => void;
   onResult: () => void;
 }) {
-  const [token, setToken] = useState('');
   const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const scannerRef = useRef<Html5Qrcode | null>(null);
+  const scanAreaId = useRef(`qr-scanner-${Math.random().toString(36).substr(2, 9)}`);
+  const isProcessingRef = useRef(false);
 
-  const handleValidar = async () => {
-    if (!token.trim()) return;
+  const stopScanning = useCallback(async () => {
+    if (!scannerRef.current) return;
+
+    const scanner = scannerRef.current;
+    scannerRef.current = null;
+    setScanning(false);
+
+    try {
+      if (scanner && typeof scanner.stop === 'function') {
+        try {
+          await scanner.stop();
+        } catch (stopErr) {
+          // Ignorar errores al detener
+        }
+      }
+    } catch (err) {
+      // Ignorar errores
+    }
+  }, []);
+
+  const handleValidar = useCallback(async (token: string) => {
+    if (!token.trim() || isProcessingRef.current) return;
+    
+    isProcessingRef.current = true;
     setLoading(true);
     setResult(null);
+    
     try {
       const data = await validarQR(token);
       const success = data.estado === 'VALIDO';
       setResult({ success, message: data.mensaje });
       if (success) {
         toast('success', 'QR validado correctamente');
-        onResult();
+        setTimeout(() => {
+          onResult();
+          onClose();
+        }, 1500);
       }
     } catch {
-      setResult({ success: false, message: 'Token invalido o error de conexion' });
+      setResult({ success: false, message: 'Token inválido o error de conexión' });
     } finally {
       setLoading(false);
+      isProcessingRef.current = false;
     }
+  }, [onClose, onResult]);
+
+  const startScanning = useCallback(async () => {
+    if (scannerRef.current || !isOpen) return;
+
+    try {
+      const html5QrCode = new Html5Qrcode(scanAreaId.current);
+      scannerRef.current = html5QrCode;
+
+      setScanning(true);
+      setCameraError(null);
+      isProcessingRef.current = false;
+
+      await html5QrCode.start(
+        { facingMode: 'environment' },
+        {
+          fps: 10,
+          qrbox: { width: 250, height: 250 },
+          aspectRatio: 1.0,
+        },
+        (decodedText) => {
+          if (isProcessingRef.current) return;
+          // Validar token y detener
+          stopScanning();
+          handleValidar(decodedText);
+        },
+        (_errorMessage) => {
+          // Ignorar errores de escaneo continuo
+        }
+      );
+    } catch (err) {
+      console.error('Error al iniciar escáner:', err);
+      setCameraError('No se pudo acceder a la cámara. Verifica los permisos.');
+      setScanning(false);
+    }
+  }, [isOpen, handleValidar, stopScanning]);
+
+  // Iniciar/detener escáner cuando se abre/cierra
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        startScanning();
+      }, 300);
+      
+      return () => {
+        clearTimeout(timer);
+        stopScanning();
+      };
+    } else {
+      stopScanning();
+      setCameraError(null);
+      isProcessingRef.current = false;
+    }
+  }, [isOpen, startScanning, stopScanning]);
+
+  // Limpiar al desmontar
+  useEffect(() => {
+    return () => {
+      stopScanning();
+      setCameraError(null);
+      isProcessingRef.current = false;
+    };
+  }, [stopScanning]);
+
+  const handleClose = () => {
+    stopScanning();
+    setCameraError(null);
+    isProcessingRef.current = false;
+    onClose();
   };
 
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="admin-modal-overlay"
-          onClick={onClose}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-            className="admin-modal admin-modal-sm"
+  const handleRetry = () => {
+    setResult(null);
+    setCameraError(null);
+    setScanning(false);
+    setTimeout(() => {
+      startScanning();
+    }, 300);
+  };
+
+  if (!isOpen) return null;
+
+  // Renderizar usando portal directamente en body
+  return createPortal(
+    <div className="qr-scanner-fullscreen" onClick={handleClose}>
+      <div className="qr-scanner-fullscreen-content" onClick={(e) => e.stopPropagation()}>
+        <div className="qr-scanner-fullscreen-header">
+          <h2 className="qr-scanner-fullscreen-title">Validar QR</h2>
+          <button
+            type="button"
+            className="qr-scanner-fullscreen-close"
+            onClick={handleClose}
+            aria-label="Cerrar"
           >
-            <div className="admin-modal-header">
-              <h3 className="admin-modal-title">Validar QR</h3>
-              <button onClick={onClose} className="admin-modal-close">
-                <X />
-              </button>
-            </div>
+            <X size={24} />
+          </button>
+        </div>
 
-            <div className="admin-modal-body">
-              <div className="admin-form-group">
-                <label>Token QR</label>
-                <div className="admin-input-icon-wrapper">
-                  <QrCode className="admin-input-icon" />
-                  <input
-                    type="text"
-                    value={token}
-                    onChange={(e) => setToken(e.target.value)}
-                    className="admin-input admin-input-with-left-icon"
-                    placeholder="Introduce el token..."
-                    onKeyDown={(e) => e.key === 'Enter' && handleValidar()}
-                  />
-                </div>
+        <div className="qr-scanner-fullscreen-body">
+          <p className="qr-scanner-fullscreen-instructions">
+            Apunta la cámara hacia el código QR para validar la reserva automáticamente.
+          </p>
+
+          <div className="qr-scanner-fullscreen-container">
+            <div id={scanAreaId.current} className="qr-scanner-fullscreen-area"></div>
+            
+            {!scanning && !cameraError && !result && !loading && (
+              <div className="qr-scanner-fullscreen-placeholder">
+                <Loader2 className="admin-spinner" style={{ width: 40, height: 40 }} />
+                <p>Iniciando cámara...</p>
               </div>
+            )}
 
-              <button
-                onClick={handleValidar}
-                disabled={loading || !token.trim()}
-                className="admin-btn admin-btn-primary"
-                style={{ width: '100%' }}
-              >
-                {loading ? <Loader2 className="admin-btn-icon spin" /> : <CheckCircle className="admin-btn-icon" />}
-                {loading ? 'Validando...' : 'Validar'}
-              </button>
+            {cameraError && (
+              <div className="qr-scanner-fullscreen-error">
+                <AlertCircle size={48} style={{ marginBottom: '1rem', opacity: 0.7 }} />
+                <p>{cameraError}</p>
+                <button
+                  type="button"
+                  className="qr-scanner-fullscreen-retry"
+                  onClick={handleRetry}
+                >
+                  <RotateCcw size={16} style={{ marginRight: '0.5rem' }} />
+                  Reintentar
+                </button>
+              </div>
+            )}
 
-              {result && (
-                <div className={`admin-validation-result ${result.success ? 'admin-validation-success' : 'admin-validation-error'}`}>
-                  {result.success ? <CheckCircle /> : <AlertCircle />}
-                  <span>{result.message}</span>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            {result && (
+              <div className={`qr-scanner-fullscreen-result ${result.success ? 'success' : 'error'}`}>
+                {result.success ? <CheckCircle size={48} /> : <AlertCircle size={48} />}
+                <p style={{ marginTop: '1rem', fontWeight: 500 }}>{result.message}</p>
+                {!result.success && (
+                  <button
+                    type="button"
+                    className="qr-scanner-fullscreen-retry"
+                    onClick={handleRetry}
+                    style={{ marginTop: '1rem' }}
+                  >
+                    <RotateCcw size={16} style={{ marginRight: '0.5rem' }} />
+                    Escanear de nuevo
+                  </button>
+                )}
+              </div>
+            )}
+
+            {loading && (
+              <div className="qr-scanner-fullscreen-placeholder">
+                <Loader2 className="admin-spinner" style={{ width: 40, height: 40 }} />
+                <p>Validando...</p>
+              </div>
+            )}
+          </div>
+
+          <div className="qr-scanner-fullscreen-actions">
+            <button
+              type="button"
+              className="qr-scanner-fullscreen-close-button"
+              onClick={handleClose}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -406,6 +559,7 @@ function CrearReservaModal({
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [codigoSocioRecomendado, setCodigoSocioRecomendado] = useState('');
   const [fecha, setFecha] = useState('');
   const [hora, setHora] = useState('');
   const [saving, setSaving] = useState(false);
@@ -416,7 +570,7 @@ function CrearReservaModal({
     setSaving(true);
     setError('');
     try {
-      await crearReserva({ nombre, email, telefono, fecha, hora });
+      await crearReserva({ nombre, email, telefono, fecha, hora, codigoSocioRecomendado });
       toast('success', 'Reserva creada correctamente');
       onCreated();
       onClose();
@@ -494,6 +648,17 @@ function CrearReservaModal({
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
                   placeholder="Telefono (+34600000000)"
+                  className="admin-input admin-input-with-left-icon"
+                />
+              </div>
+              <div className="admin-input-icon-wrapper">
+                <User className="admin-input-icon" />
+                <input
+                  type="text"
+                  required
+                  value={codigoSocioRecomendado}
+                  onChange={(e) => setCodigoSocioRecomendado(e.target.value)}
+                  placeholder="Código de Socio Recomendado"
                   className="admin-input admin-input-with-left-icon"
                 />
               </div>
@@ -626,16 +791,8 @@ export default function AdminReservas() {
     cancelada: reservas.filter((r) => r.cancelada).length,
   };
 
-  if (loading) {
-    return (
-      <div className="admin-loading">
-        <div className="admin-spinner" />
-      </div>
-    );
-  }
-
   return (
-    <div className="admin-space-y">
+    <div className="admin-space-y page-content">
       <div className="admin-page-header" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
         <div>
           <h2 className="admin-page-title">Reservas</h2>
@@ -707,17 +864,20 @@ export default function AdminReservas() {
         ))}
       </div>
 
-      <div className="admin-table-container">
-        <ReservasTable
+      <ResponsiveContainer className="table-container">
+        <ReservasList
           reservas={filteredReservas}
           currentPage={currentPage}
           totalPages={totalPages}
+          totalElements={totalElements}
+          isLoading={loading}
           onPageChange={setCurrentPage}
           onView={setSelectedReserva}
           onEdit={setEditingReserva}
           onCancel={setCancelId}
+          onUsar={handleValidarQR}
         />
-      </div>
+      </ResponsiveContainer>
 
       <AnimatePresence>
         {selectedReserva && (

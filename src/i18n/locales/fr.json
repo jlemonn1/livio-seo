@@ -124,6 +124,8 @@
     "emailPlaceholder": "jean@email.com",
     "phone": "Téléphone",
     "phonePlaceholder": "+34 600 000 000",
+    "referralCode": "Code de Membre Parrainé",
+    "referralCodePlaceholder": "Ex: MEMBRE123",
     "date": "Date",
     "selectDate": "Sélectionnez une date",
     "time": "Heure",

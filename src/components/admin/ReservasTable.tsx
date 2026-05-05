@@ -11,6 +11,7 @@ interface ReservasTableProps {
   onView: (reserva: ReservaDetalle) => void;
   onEdit: (reserva: ReservaDetalle) => void;
   onCancel: (id: number) => void;
+  onUsar?: (id: number) => void;
 }
 
 export default function ReservasTable({
@@ -21,6 +22,7 @@ export default function ReservasTable({
   onView,
   onEdit,
   onCancel,
+  onUsar,
 }: ReservasTableProps) {
   if (reservas.length === 0) {
     return (
@@ -43,6 +45,7 @@ export default function ReservasTable({
                 <th>Hora</th>
                 <th>Nombre</th>
                 <th className="admin-hidden-sm">Email</th>
+                <th className="admin-hidden-sm">Código Socio</th>
                 <th>Estado</th>
                 <th style={{ textAlign: 'right' }}>Acciones</th>
               </tr>
@@ -54,6 +57,7 @@ export default function ReservasTable({
                   <td className="admin-table-cell-gray">{reserva.hora}</td>
                   <td className="admin-table-cell-medium">{reserva.nombre}</td>
                   <td className="admin-table-cell-gray admin-hidden-sm">{reserva.email}</td>
+                  <td className="admin-table-cell-gray admin-hidden-sm">{reserva.codigoSocioRecomendado}</td>
                   <td>
                     <ReservaStatusBadge cancelada={reserva.cancelada} qrUsado={reserva.qrUsado} />
                   </td>
@@ -103,6 +107,7 @@ export default function ReservasTable({
               onView={onView}
               onEdit={onEdit}
               onCancel={onCancel}
+              onUsar={onUsar}
             />
           ))}
         </div>
