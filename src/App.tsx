@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { Leaf, Menu, X, ChevronDown, Clock, Phone, Mail, Users, Shield, Copy, ArrowRight, ChevronLeft, ChevronRight, Banknote } from 'lucide-react';
+import { Leaf, Menu, X, ChevronDown, Clock, Phone, Mail, Users, Shield, Copy, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode';
@@ -424,55 +424,6 @@ function Steps() {
 }
 
 
-
-function Membership() {
-  const { t } = useTranslation();
-  return (
-    <section id="membership" className="membership">
-      <FloatingLeaf className="leaf-membership-1" delay={0.5} />
-      <FloatingLeaf className="leaf-membership-2" delay={2.5} />
-      
-      <div className="container">
-        <AnimatedSection className="membership-content" delay={0.2}>
-          <div className="membership-card-visual">
-            <svg viewBox="0 0 200 120" className="membership-svg-card">
-              <defs>
-                <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#1a1a1a" />
-                  <stop offset="100%" stopColor="#2a2a2a" />
-                </linearGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              <rect x="10" y="10" width="180" height="100" rx="12" fill="url(#cardGrad)" stroke="#E5A835" strokeWidth="2" filter="url(#glow)"/>
-              <rect x="25" y="70" width="50" height="8" rx="2" fill="#E5A835" opacity="0.8"/>
-              <rect x="25" y="82" width="80" height="4" rx="1" fill="#666"/>
-              <circle cx="160" cy="75" r="15" fill="none" stroke="#E5A835" strokeWidth="2" opacity="0.6"/>
-              <text x="160" y="80" textAnchor="middle" fill="#E5A835" fontSize="12" fontWeight="bold">★</text>
-            </svg>
-          </div>
-          
-          <div className="membership-info">
-            <h2 className="section-title">{t('membership.title')}</h2>
-            <div className="membership-price">
-              <span className="price-amount">20€</span>
-              <span className="price-period">/{t('membership.period')}</span>
-            </div>
-            <div className="membership-payment">
-              <Banknote className="payment-icon" />
-              <span>{t('membership.cashOnly')}</span>
-            </div>
-          </div>
-        </AnimatedSection>
-      </div>
-    </section>
-  );
-}
 
 function Location() {
   const { t } = useTranslation();
@@ -990,7 +941,6 @@ export default function App() {
       <Hero onReserve={() => setModalOpen(true)} />
       <About />
       <Steps />
-      <Membership />
       <Gallery />
       <Location />
       <FAQ />
